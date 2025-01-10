@@ -6,17 +6,21 @@
 //! This module provides an in-memory implementation of the TAP manager context.
 //! It is useful for testing and development purposes.
 
+use std::{
+    collections::HashMap,
+    ops::RangeBounds,
+    sync::{Arc, RwLock},
+};
+
+use alloy::primitives::Address;
+use async_trait::async_trait;
+
 use crate::{
     manager::adapters::*,
     rav::SignedRAV,
     receipt::{checks::StatefulTimestampCheck, state::Checking, ReceiptWithState},
     signed_message::MessageId,
 };
-use alloy::primitives::Address;
-use async_trait::async_trait;
-use std::ops::RangeBounds;
-use std::sync::RwLock;
-use std::{collections::HashMap, sync::Arc};
 
 pub type EscrowStorage = Arc<RwLock<HashMap<Address, u128>>>;
 pub type QueryAppraisals = Arc<RwLock<HashMap<MessageId, u128>>>;
@@ -259,6 +263,13 @@ impl EscrowHandler for InMemoryContext {
 }
 
 pub mod checks {
+    use std::{
+        collections::{HashMap, HashSet},
+        sync::{Arc, RwLock},
+    };
+
+    use alloy::{dyn_abi::Eip712Domain, primitives::Address};
+
     use crate::{
         receipt::{
             checks::{Check, CheckError, CheckResult, ReceiptCheck},
@@ -266,11 +277,6 @@ pub mod checks {
             Context, ReceiptError, ReceiptWithState,
         },
         signed_message::MessageId,
-    };
-    use alloy::{dyn_abi::Eip712Domain, primitives::Address};
-    use std::{
-        collections::{HashMap, HashSet},
-        sync::{Arc, RwLock},
     };
 
     pub fn get_full_list_of_checks(

@@ -41,12 +41,10 @@ mod request;
 
 use std::cmp;
 
-use alloy::primitives::Address;
-use alloy::sol;
+use alloy::{primitives::Address, sol};
 use serde::{Deserialize, Serialize};
 
-use crate::Error;
-use crate::{receipt::Receipt, signed_message::EIP712SignedMessage};
+use crate::{receipt::Receipt, signed_message::EIP712SignedMessage, Error};
 
 /// EIP712 signed message for ReceiptAggregateVoucher
 pub type SignedRAV = EIP712SignedMessage<ReceiptAggregateVoucher>;

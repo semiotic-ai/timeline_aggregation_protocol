@@ -1,11 +1,13 @@
 // Copyright 2023-, Semiotic AI, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::receipt::state::Reserved;
-use crate::Error;
 use crate::{
     rav::{ReceiptAggregateVoucher, SignedRAV},
-    receipt::{state::Failed, ReceiptWithState},
+    receipt::{
+        state::{Failed, Reserved},
+        ReceiptWithState,
+    },
+    Error,
 };
 
 /// Request to `tap_aggregator` to aggregate receipts into a Signed RAV.

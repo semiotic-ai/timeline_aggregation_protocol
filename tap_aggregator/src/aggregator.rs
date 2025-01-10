@@ -137,9 +137,9 @@ mod tests {
 
     use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner};
     use rstest::*;
+    use tap_core::{receipt::Receipt, signed_message::EIP712SignedMessage, tap_eip712_domain};
 
     use crate::aggregator;
-    use tap_core::{receipt::Receipt, signed_message::EIP712SignedMessage, tap_eip712_domain};
 
     #[fixture]
     fn keys() -> (PrivateKeySigner, Address) {

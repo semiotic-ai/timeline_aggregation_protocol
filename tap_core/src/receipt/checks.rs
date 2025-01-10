@@ -29,17 +29,17 @@
 //! let my_check: ReceiptCheck = Arc::new(MyCheck);
 //! ```
 
-use crate::signed_message::{SignatureBytes, SignatureBytesExt};
-
-use super::{
-    state::{Checking, Failed},
-    Context, ReceiptError, ReceiptWithState,
-};
 use std::{
     collections::HashSet,
     ops::Deref,
     sync::{Arc, RwLock},
 };
+
+use super::{
+    state::{Checking, Failed},
+    Context, ReceiptError, ReceiptWithState,
+};
+use crate::signed_message::{SignatureBytes, SignatureBytesExt};
 
 /// ReceiptCheck is a type alias for an Arc of a struct that implements the `Check` trait.
 pub type ReceiptCheck = Arc<dyn Check + Sync + Send>;
@@ -200,19 +200,18 @@ impl CheckBatch for UniqueCheck {
 
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
-    use std::time::Duration;
-    use std::time::SystemTime;
+    use std::{
+        str::FromStr,
+        time::{Duration, SystemTime},
+    };
 
-    use alloy::dyn_abi::Eip712Domain;
-    use alloy::primitives::Address;
-    use alloy::signers::local::PrivateKeySigner;
-    use alloy::sol_types::eip712_domain;
-
-    use crate::receipt::Receipt;
-    use crate::signed_message::EIP712SignedMessage;
+    use alloy::{
+        dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner,
+        sol_types::eip712_domain,
+    };
 
     use super::*;
+    use crate::{receipt::Receipt, signed_message::EIP712SignedMessage};
 
     fn create_signed_receipt_with_custom_value(value: u128) -> ReceiptWithState<Checking> {
         let wallet: PrivateKeySigner = PrivateKeySigner::random();

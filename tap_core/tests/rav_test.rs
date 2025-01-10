@@ -1,19 +1,24 @@
 // Copyright 2023-, Semiotic AI, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-use std::collections::HashMap;
-use std::sync::RwLock;
-use std::{str::FromStr, sync::Arc};
+use std::{
+    collections::HashMap,
+    str::FromStr,
+    sync::{Arc, RwLock},
+};
 
-use alloy::dyn_abi::Eip712Domain;
 #[allow(deprecated)]
 use alloy::primitives::{Address, PrimitiveSignature, Signature};
-use alloy::signers::local::{coins_bip39::English, MnemonicBuilder, PrivateKeySigner};
+use alloy::{
+    dyn_abi::Eip712Domain,
+    signers::local::{coins_bip39::English, MnemonicBuilder, PrivateKeySigner},
+};
 use rstest::*;
-
-use tap_core::manager::context::memory::InMemoryContext;
 use tap_core::{
-    manager::adapters::{RAVRead, RAVStore},
+    manager::{
+        adapters::{RAVRead, RAVStore},
+        context::memory::InMemoryContext,
+    },
     rav::ReceiptAggregateVoucher,
     receipt::{checks::StatefulTimestampCheck, Receipt},
     signed_message::EIP712SignedMessage,

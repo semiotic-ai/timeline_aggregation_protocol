@@ -23,7 +23,6 @@ use jsonrpsee::{
 };
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use rstest::*;
-
 use tap_aggregator::{jsonrpsee_helpers, server as agg_server};
 use tap_core::{
     manager::context::memory::{checks::get_full_list_of_checks, *},

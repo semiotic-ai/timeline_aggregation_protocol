@@ -11,13 +11,15 @@ jobs:
   fmt:
     name: cargo fmt
     runs-on: ubuntu-latest
-    container:
-      image: rust:1.83-bookworm
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-          rustup component add rustfmt
-          cargo fmt --all -- --check
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions-rust-lang/setup-rust-toolchain@11df97af8e8102fd60b60a77dfbf58d40cd843b8 # v1
+        with:
+          # Imports formatting is an unstable feature, so we need to use nightly
+          toolchain: nightly
+          components: rustfmt
+          cache: false
+      - run: cargo +nightly fmt --all -- --check
 
   clippy:
     name: cargo clippy

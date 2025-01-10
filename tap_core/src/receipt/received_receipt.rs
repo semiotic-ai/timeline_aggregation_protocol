@@ -15,11 +15,13 @@
 
 use alloy::dyn_abi::Eip712Domain;
 
-use super::checks::CheckError;
-use super::{Context, Receipt, ReceiptError, ReceiptResult, SignedReceipt};
-use crate::receipt::state::{AwaitingReserve, Checking, Failed, ReceiptState, Reserved};
+use super::{checks::CheckError, Context, Receipt, ReceiptError, ReceiptResult, SignedReceipt};
 use crate::{
-    manager::adapters::EscrowHandler, receipt::checks::ReceiptCheck,
+    manager::adapters::EscrowHandler,
+    receipt::{
+        checks::ReceiptCheck,
+        state::{AwaitingReserve, Checking, Failed, ReceiptState, Reserved},
+    },
     signed_message::EIP712SignedMessage,
 };
 

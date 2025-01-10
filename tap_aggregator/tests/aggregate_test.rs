@@ -4,7 +4,6 @@
 use std::{collections::HashSet, str::FromStr};
 
 use alloy::{primitives::Address, signers::local::PrivateKeySigner};
-
 use jsonrpsee::{core::client::ClientT, http_client::HttpClientBuilder, rpc_params};
 use tap_aggregator::{
     grpc::{tap_aggregator_client::TapAggregatorClient, RavRequest},

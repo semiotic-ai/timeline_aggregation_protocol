@@ -8,7 +8,6 @@ use std::{
 
 use alloy::signers::local::PrivateKeySigner;
 use rstest::*;
-
 use tap_core::{
     manager::{adapters::EscrowHandler, context::memory::InMemoryContext},
     receipt::checks::StatefulTimestampCheck,

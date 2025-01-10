@@ -1,20 +1,19 @@
-use alloy::dyn_abi::Eip712Domain;
-use alloy::primitives::Address;
-use alloy::signers::local::PrivateKeySigner;
+use std::{
+    collections::HashMap,
+    str::FromStr,
+    sync::{Arc, RwLock},
+};
+
+use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner};
 // Copyright 2023-, Semiotic AI, Inc.
 // SPDX-License-Identifier: Apache-2.0
 use rand::seq::SliceRandom;
 use rand::thread_rng;
-use std::collections::HashMap;
-use std::str::FromStr;
-use std::sync::{Arc, RwLock};
-use tap_core::manager::context::memory::InMemoryContext;
-use tap_core::receipt::{state::Checking, ReceiptWithState};
-
 use rstest::*;
-use tap_core::receipt::checks::StatefulTimestampCheck;
 use tap_core::{
-    manager::adapters::ReceiptStore, receipt::Receipt, signed_message::EIP712SignedMessage,
+    manager::{adapters::ReceiptStore, context::memory::InMemoryContext},
+    receipt::{checks::StatefulTimestampCheck, state::Checking, Receipt, ReceiptWithState},
+    signed_message::EIP712SignedMessage,
     tap_eip712_domain,
 };
 

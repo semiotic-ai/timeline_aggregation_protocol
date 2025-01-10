@@ -388,20 +388,18 @@ fn create_json_rpc_service(
 #[cfg(test)]
 #[allow(clippy::too_many_arguments)]
 mod tests {
-    use std::collections::HashSet;
-    use std::str::FromStr;
+    use std::{collections::HashSet, str::FromStr};
 
     use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner};
     use jsonrpsee::{core::client::ClientT, http_client::HttpClientBuilder, rpc_params};
-    use rand::prelude::*;
-    use rand::seq::SliceRandom;
+    use rand::{prelude::*, seq::SliceRandom};
     use rstest::*;
-
-    use crate::server;
     use tap_core::{
         rav::ReceiptAggregateVoucher, receipt::Receipt, signed_message::EIP712SignedMessage,
         tap_eip712_domain,
     };
+
+    use crate::server;
 
     #[derive(Clone)]
     struct Keys {

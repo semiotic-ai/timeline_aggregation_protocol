@@ -43,10 +43,14 @@ impl Receipt {
 
 #[cfg(test)]
 mod receipt_unit_test {
-    use super::*;
+    use std::{
+        str::FromStr,
+        time::{SystemTime, UNIX_EPOCH},
+    };
+
     use rstest::*;
-    use std::str::FromStr;
-    use std::time::{SystemTime, UNIX_EPOCH};
+
+    use super::*;
 
     #[fixture]
     fn allocation_ids() -> Vec<Address> {

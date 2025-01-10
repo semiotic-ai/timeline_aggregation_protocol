@@ -14,7 +14,6 @@ use jsonrpsee::{
     rpc_params,
     server::{ServerBuilder, ServerHandle},
 };
-
 use tap_aggregator::jsonrpsee_helpers;
 use tap_core::{
     manager::{

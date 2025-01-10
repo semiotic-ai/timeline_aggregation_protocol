@@ -9,9 +9,8 @@ use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateK
 use anyhow::Result;
 use clap::Parser;
 use log::{debug, info};
-use tap_core::tap_eip712_domain;
-
 use tap_aggregator::{metrics, server};
+use tap_core::tap_eip712_domain;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]

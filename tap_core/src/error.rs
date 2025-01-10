@@ -4,10 +4,12 @@
 //! Module containing Error type and Result typedef
 //!
 
-use crate::{rav::ReceiptAggregateVoucher, receipt::ReceiptError};
-use alloy::primitives::{Address, SignatureError};
 use std::result::Result as StdResult;
+
+use alloy::primitives::{Address, SignatureError};
 use thiserror::Error as ThisError;
+
+use crate::{rav::ReceiptAggregateVoucher, receipt::ReceiptError};
 
 /// Error type for the TAP protocol
 #[derive(ThisError, Debug)]
