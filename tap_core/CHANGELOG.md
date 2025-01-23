@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_core-v2.0.0...tap_core-v3.0.0) (2025-01-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* make manager generic over rav ([#267](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/267))
+* manager generic over receipt ([#266](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/266))
+* remove unused escrow handler methods ([#264](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/264))
+
+### Code Refactoring
+
+* make manager generic over rav ([#267](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/267)) ([1fc51a3](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/1fc51a3ff9ce74027b47a0e6d026a5bedd9ca00c))
+* manager generic over receipt ([#266](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/266)) ([25a3316](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/25a3316abd8596c3d5081d6b8f0507034c60d2a4))
+* remove unused escrow handler methods ([#264](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/264)) ([e5511ff](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/e5511ff7a5cc4753782f718f4517a0a0a8d9db56))
+
 ## [2.0.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_core-v1.0.0...tap_core-v2.0.0) (2024-10-30)
 
 
