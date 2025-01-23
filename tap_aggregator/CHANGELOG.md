@@ -20,6 +20,26 @@
   * dependencies
     * tap_core bumped from * to 2.0.0
 
+## [0.4.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_aggregator-v0.3.3...tap_aggregator-v0.4.0) (2025-01-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* make manager generic over rav ([#267](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/267))
+* manager generic over receipt ([#266](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/266))
+
+### Code Refactoring
+
+* make manager generic over rav ([#267](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/267)) ([1fc51a3](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/1fc51a3ff9ce74027b47a0e6d026a5bedd9ca00c))
+* manager generic over receipt ([#266](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/266)) ([25a3316](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/25a3316abd8596c3d5081d6b8f0507034c60d2a4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * tap_core bumped from 2.0.0 to 3.0.0
+
 ## [0.3.3](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_aggregator-v0.3.2...tap_aggregator-v0.3.3) (2024-12-27)
 
 
