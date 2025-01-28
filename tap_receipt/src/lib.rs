@@ -21,18 +21,14 @@
 //!
 pub mod checks;
 mod error;
-mod receipt_sol;
+pub mod rav;
 mod received_receipt;
 pub mod state;
 
+use alloy::sol_types::SolStruct;
 pub use error::ReceiptError;
-pub use receipt_sol::Receipt;
 pub use received_receipt::ReceiptWithState;
-
-use crate::signed_message::EIP712SignedMessage;
-
-/// A signed receipt message
-pub type SignedReceipt = EIP712SignedMessage<Receipt>;
+use tap_eip712_message::{EIP712SignedMessage, SignatureBytes, SignatureBytesExt};
 
 /// Result type for receipt
 pub type ReceiptResult<T> = Result<T, ReceiptError>;
@@ -47,4 +43,28 @@ pub trait WithValueAndTimestamp {
 pub trait WithUniqueId {
     type Output: Eq + std::hash::Hash;
     fn unique_id(&self) -> Self::Output;
+}
+
+impl<T> WithValueAndTimestamp for EIP712SignedMessage<T>
+where
+    T: SolStruct + WithValueAndTimestamp,
+{
+    fn value(&self) -> u128 {
+        self.message.value()
+    }
+
+    fn timestamp_ns(&self) -> u64 {
+        self.message.timestamp_ns()
+    }
+}
+
+impl<T> WithUniqueId for EIP712SignedMessage<T>
+where
+    T: SolStruct,
+{
+    type Output = SignatureBytes;
+
+    fn unique_id(&self) -> Self::Output {
+        self.signature.get_signature_bytes()
+    }
 }

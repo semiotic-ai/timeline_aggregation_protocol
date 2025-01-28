@@ -6,7 +6,7 @@ use tap_core::signed_message::EIP712SignedMessage;
 
 tonic::include_proto!("tap_aggregator.v1");
 
-impl TryFrom<Receipt> for tap_core::receipt::Receipt {
+impl TryFrom<Receipt> for tap_graph::Receipt {
     type Error = anyhow::Error;
     fn try_from(receipt: Receipt) -> Result<Self, Self::Error> {
         Ok(Self {
@@ -18,7 +18,7 @@ impl TryFrom<Receipt> for tap_core::receipt::Receipt {
     }
 }
 
-impl TryFrom<SignedReceipt> for tap_core::receipt::SignedReceipt {
+impl TryFrom<SignedReceipt> for tap_graph::SignedReceipt {
     type Error = anyhow::Error;
     fn try_from(receipt: SignedReceipt) -> Result<Self, Self::Error> {
         Ok(Self {
@@ -31,8 +31,8 @@ impl TryFrom<SignedReceipt> for tap_core::receipt::SignedReceipt {
     }
 }
 
-impl From<tap_core::receipt::Receipt> for Receipt {
-    fn from(value: tap_core::receipt::Receipt) -> Self {
+impl From<tap_graph::Receipt> for Receipt {
+    fn from(value: tap_graph::Receipt) -> Self {
         Self {
             allocation_id: value.allocation_id.as_slice().to_vec(),
             timestamp_ns: value.timestamp_ns,
@@ -42,8 +42,8 @@ impl From<tap_core::receipt::Receipt> for Receipt {
     }
 }
 
-impl From<tap_core::receipt::SignedReceipt> for SignedReceipt {
-    fn from(value: tap_core::receipt::SignedReceipt) -> Self {
+impl From<tap_graph::SignedReceipt> for SignedReceipt {
+    fn from(value: tap_graph::SignedReceipt) -> Self {
         Self {
             message: Some(value.message.into()),
             signature: value.signature.as_bytes().to_vec(),
@@ -51,7 +51,7 @@ impl From<tap_core::receipt::SignedReceipt> for SignedReceipt {
     }
 }
 
-impl TryFrom<SignedRav> for EIP712SignedMessage<tap_core::rav::ReceiptAggregateVoucher> {
+impl TryFrom<SignedRav> for EIP712SignedMessage<tap_graph::ReceiptAggregateVoucher> {
     type Error = anyhow::Error;
     fn try_from(voucher: SignedRav) -> Result<Self, Self::Error> {
         Ok(Self {
@@ -64,8 +64,8 @@ impl TryFrom<SignedRav> for EIP712SignedMessage<tap_core::rav::ReceiptAggregateV
     }
 }
 
-impl From<EIP712SignedMessage<tap_core::rav::ReceiptAggregateVoucher>> for SignedRav {
-    fn from(voucher: EIP712SignedMessage<tap_core::rav::ReceiptAggregateVoucher>) -> Self {
+impl From<EIP712SignedMessage<tap_graph::ReceiptAggregateVoucher>> for SignedRav {
+    fn from(voucher: EIP712SignedMessage<tap_graph::ReceiptAggregateVoucher>) -> Self {
         Self {
             signature: voucher.signature.as_bytes().to_vec(),
             message: Some(voucher.message.into()),
@@ -73,7 +73,7 @@ impl From<EIP712SignedMessage<tap_core::rav::ReceiptAggregateVoucher>> for Signe
     }
 }
 
-impl TryFrom<ReceiptAggregateVoucher> for tap_core::rav::ReceiptAggregateVoucher {
+impl TryFrom<ReceiptAggregateVoucher> for tap_graph::ReceiptAggregateVoucher {
     type Error = anyhow::Error;
     fn try_from(voucher: ReceiptAggregateVoucher) -> Result<Self, Self::Error> {
         Ok(Self {
@@ -87,8 +87,8 @@ impl TryFrom<ReceiptAggregateVoucher> for tap_core::rav::ReceiptAggregateVoucher
     }
 }
 
-impl From<tap_core::rav::ReceiptAggregateVoucher> for ReceiptAggregateVoucher {
-    fn from(voucher: tap_core::rav::ReceiptAggregateVoucher) -> Self {
+impl From<tap_graph::ReceiptAggregateVoucher> for ReceiptAggregateVoucher {
+    fn from(voucher: tap_graph::ReceiptAggregateVoucher) -> Self {
         Self {
             allocation_id: voucher.allocationId.to_vec(),
             timestamp_ns: voucher.timestampNs,
@@ -113,8 +113,8 @@ impl From<u128> for Uint128 {
 
 impl RavRequest {
     pub fn new(
-        receipts: Vec<tap_core::receipt::SignedReceipt>,
-        previous_rav: Option<tap_core::rav::SignedRav>,
+        receipts: Vec<tap_graph::SignedReceipt>,
+        previous_rav: Option<tap_graph::SignedRav>,
     ) -> Self {
         Self {
             receipts: receipts.into_iter().map(Into::into).collect(),
@@ -124,8 +124,8 @@ impl RavRequest {
 }
 
 impl RavResponse {
-    pub fn signed_rav(mut self) -> anyhow::Result<tap_core::rav::SignedRav> {
-        let signed_rav: tap_core::rav::SignedRav = self
+    pub fn signed_rav(mut self) -> anyhow::Result<tap_graph::SignedRav> {
+        let signed_rav: tap_graph::SignedRav = self
             .rav
             .take()
             .ok_or(anyhow!("Couldn't find rav"))?

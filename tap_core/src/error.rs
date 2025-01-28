@@ -6,7 +6,7 @@
 
 use std::result::Result as StdResult;
 
-use alloy::primitives::{Address, SignatureError};
+use alloy::primitives::Address;
 use thiserror::Error as ThisError;
 
 use crate::receipt::ReceiptError;
@@ -26,7 +26,7 @@ pub enum Error {
 
     /// `alloy` wallet error
     #[error(transparent)]
-    SignatureError(#[from] SignatureError),
+    SignatureError(#[from] tap_eip712_message::Eip712Error),
 
     /// Error when signature verification fails
     #[error("Expected address {expected} but received {received}")]

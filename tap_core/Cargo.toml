@@ -10,12 +10,14 @@ description = "Core Timeline Aggregation Protocol library: a fast, efficient and
 [dependencies]
 alloy.workspace = true
 anyhow.workspace = true
-anymap3 = "1.0.1"
 async-trait = "0.1.85"
 rand.workspace = true
 serde.workspace = true
-thiserror = "2.0.11"
+thiserror.workspace = true
 tokio.workspace = true
+tap_receipt = { path = "../tap_receipt" }
+tap_eip712_message = { path = "../tap_eip712_message" }
+tap_graph = { path = "../tap_graph", optional = true }
 
 [dev-dependencies]
 criterion = { version = "0.5.1", features = ["async_std"] }
@@ -25,7 +27,7 @@ serde_json.workspace = true
 
 [features]
 default = ["in_memory"]
-in_memory = []
+in_memory = ["dep:tap_graph"]
 
 [[bench]]
 name = 'timeline_aggretion_protocol_benchmark'

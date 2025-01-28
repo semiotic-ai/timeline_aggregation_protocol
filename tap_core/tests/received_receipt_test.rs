@@ -13,11 +13,12 @@ use tap_core::{
     manager::context::memory::{checks::get_full_list_of_checks, EscrowStorage, QueryAppraisals},
     receipt::{
         checks::{ReceiptCheck, StatefulTimestampCheck},
-        Context, Receipt, ReceiptWithState, SignedReceipt,
+        Context, ReceiptWithState,
     },
     signed_message::EIP712SignedMessage,
     tap_eip712_domain,
 };
+use tap_graph::{Receipt, SignedReceipt};
 
 #[fixture]
 fn signer() -> PrivateKeySigner {

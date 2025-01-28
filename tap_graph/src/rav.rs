@@ -37,31 +37,21 @@
 //! Rav requests should be created using the
 //! [`crate::manager::Manager::create_rav_request`] function.
 
-mod request;
-
 use std::cmp;
 
-use alloy::{primitives::Address, sol, sol_types::SolStruct};
+use alloy::{primitives::Address, sol};
 use serde::{Deserialize, Serialize};
-
-use crate::{
-    receipt::{state::Checked, Receipt, ReceiptWithState, SignedReceipt, WithValueAndTimestamp},
-    signed_message::EIP712SignedMessage,
-    Error,
+use tap_eip712_message::EIP712SignedMessage;
+use tap_receipt::{
+    rav::{Aggregate, AggregationError},
+    state::Checked,
+    ReceiptWithState, WithValueAndTimestamp,
 };
+
+use crate::{receipt::Receipt, SignedReceipt};
 
 /// EIP712 signed message for ReceiptAggregateVoucher
 pub type SignedRav = EIP712SignedMessage<ReceiptAggregateVoucher>;
-pub use request::RavRequest;
-
-pub trait Aggregate<T>: SolStruct {
-    /// Aggregates a batch of validated receipts with optional validated previous RAV,
-    /// returning a new RAV if all provided items are valid or an error if not.
-    fn aggregate_receipts(
-        receipts: &[ReceiptWithState<Checked, T>],
-        previous_rav: Option<EIP712SignedMessage<Self>>,
-    ) -> Result<Self, Error>;
-}
 
 sol! {
     /// Holds information needed for promise of payment signed with ECDSA
@@ -92,7 +82,7 @@ impl ReceiptAggregateVoucher {
         allocation_id: Address,
         receipts: &[EIP712SignedMessage<Receipt>],
         previous_rav: Option<EIP712SignedMessage<Self>>,
-    ) -> crate::Result<Self> {
+    ) -> Result<Self, AggregationError> {
         //TODO(#29): When receipts in flight struct in created check that the state
         // of every receipt is OK with all checks complete (relies on #28)
         // If there is a previous RAV get initialize values from it, otherwise get default values
@@ -107,7 +97,7 @@ impl ReceiptAggregateVoucher {
         for receipt in receipts {
             value_aggregate = value_aggregate
                 .checked_add(receipt.message.value)
-                .ok_or(Error::AggregateOverflow)?;
+                .ok_or(AggregationError::AggregateOverflow)?;
 
             timestamp_max = cmp::max(timestamp_max, receipt.message.timestamp_ns)
         }
@@ -124,9 +114,9 @@ impl Aggregate<SignedReceipt> for ReceiptAggregateVoucher {
     fn aggregate_receipts(
         receipts: &[ReceiptWithState<Checked, SignedReceipt>],
         previous_rav: Option<EIP712SignedMessage<Self>>,
-    ) -> Result<Self, Error> {
+    ) -> Result<Self, AggregationError> {
         if receipts.is_empty() {
-            return Err(Error::NoValidReceiptsForRavRequest);
+            return Err(AggregationError::NoValidReceiptsForRavRequest);
         }
         let allocation_id = receipts[0].signed_receipt().message.allocation_id;
         let receipts = receipts

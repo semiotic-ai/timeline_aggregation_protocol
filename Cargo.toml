@@ -1,6 +1,13 @@
 [workspace]
 resolver = "2"
-members = ["tap_core", "tap_aggregator", "tap_integration_tests"]
+members = [
+    "tap_core",
+    "tap_aggregator",
+    "tap_integration_tests",
+    "tap_graph",
+    "tap_eip712_message",
+    "tap_receipt",
+]
 
 [workspace.package]
 version = "0.1.0"
@@ -18,3 +25,4 @@ rand = "0.8.5"
 jsonrpsee = { version = "0.24.7", features = ["macros", "server"] }
 insta = { version = "1.42.0", features = ["json"] }
 serde_json = { version = "1.0.137", features = ["raw_value"] }
+thiserror = "2.0.11"

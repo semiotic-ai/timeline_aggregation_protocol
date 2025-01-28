@@ -14,11 +14,8 @@ use jsonrpsee::{
 use lazy_static::lazy_static;
 use log::info;
 use prometheus::{register_counter, register_int_counter, Counter, IntCounter};
-use tap_core::{
-    rav::ReceiptAggregateVoucher,
-    receipt::{Receipt, SignedReceipt},
-    signed_message::EIP712SignedMessage,
-};
+use tap_core::signed_message::EIP712SignedMessage;
+use tap_graph::{Receipt, ReceiptAggregateVoucher, SignedReceipt};
 use tokio::{net::TcpListener, signal, task::JoinHandle};
 use tonic::{codec::CompressionEncoding, service::Routes, Request, Response, Status};
 use tower::{layer::util::Identity, make::Shared};
@@ -394,10 +391,8 @@ mod tests {
     use jsonrpsee::{core::client::ClientT, http_client::HttpClientBuilder, rpc_params};
     use rand::{prelude::*, seq::SliceRandom};
     use rstest::*;
-    use tap_core::{
-        rav::ReceiptAggregateVoucher, receipt::Receipt, signed_message::EIP712SignedMessage,
-        tap_eip712_domain,
-    };
+    use tap_core::{signed_message::EIP712SignedMessage, tap_eip712_domain};
+    use tap_graph::{Receipt, ReceiptAggregateVoucher};
 
     use crate::server;
 

@@ -10,10 +10,8 @@ use tap_aggregator::{
     jsonrpsee_helpers::JsonRpcResponse,
     server,
 };
-use tap_core::{
-    rav::ReceiptAggregateVoucher, receipt::Receipt, signed_message::EIP712SignedMessage,
-    tap_eip712_domain,
-};
+use tap_core::{signed_message::EIP712SignedMessage, tap_eip712_domain};
+use tap_graph::{Receipt, ReceiptAggregateVoucher};
 use tonic::codec::CompressionEncoding;
 
 #[tokio::test]
@@ -64,11 +62,11 @@ async fn aggregation_test() {
 
     let rav_request = RavRequest::new(receipts.clone(), None);
     let res = client.aggregate_receipts(rav_request).await.unwrap();
-    let signed_rav: tap_core::rav::SignedRav = res.into_inner().signed_rav().unwrap();
+    let signed_rav: tap_graph::SignedRav = res.into_inner().signed_rav().unwrap();
 
     let sender_aggregator = HttpClientBuilder::default().build(&endpoint).unwrap();
 
-    let previous_rav: Option<tap_core::rav::SignedRav> = None;
+    let previous_rav: Option<tap_graph::SignedRav> = None;
 
     let response: JsonRpcResponse<EIP712SignedMessage<ReceiptAggregateVoucher>> = sender_aggregator
         .request(

@@ -19,11 +19,11 @@ use tap_core::{
         adapters::{RavRead, RavStore},
         context::memory::InMemoryContext,
     },
-    rav::ReceiptAggregateVoucher,
-    receipt::{checks::StatefulTimestampCheck, Receipt},
+    receipt::checks::StatefulTimestampCheck,
     signed_message::EIP712SignedMessage,
     tap_eip712_domain,
 };
+use tap_graph::{Receipt, ReceiptAggregateVoucher};
 
 #[fixture]
 fn domain_separator() -> Eip712Domain {

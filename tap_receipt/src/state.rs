@@ -7,7 +7,7 @@
 //! state of a receipt.
 //! The `ReceiptState` trait represents the different states a receipt can be in.
 
-use crate::receipt::ReceiptError;
+use crate::ReceiptError;
 
 /// Checking state represents a receipt that is currently being checked.
 #[derive(Debug, Clone)]

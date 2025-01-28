@@ -14,7 +14,7 @@
 //! their progress through various checks and stages of inclusion in RAV requests and received RAVs.
 
 use super::{checks::CheckError, Context, ReceiptError, ReceiptResult};
-use crate::receipt::{
+use crate::{
     checks::ReceiptCheck,
     state::{Checked, Checking, Failed, ReceiptState},
 };

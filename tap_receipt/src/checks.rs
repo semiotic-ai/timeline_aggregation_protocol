@@ -10,11 +10,12 @@
 //!
 //! ```rust
 //! # use std::sync::Arc;
-//! use tap_core::{
-//!     receipt::checks::{Check, CheckResult, ReceiptCheck},
-//!     receipt::{Context, ReceiptWithState, state::Checking, SignedReceipt}
+//! use tap_receipt::{
+//!     checks::{Check, CheckResult, ReceiptCheck},
+//!     Context, ReceiptWithState, state::Checking
 //! };
 //! # use async_trait::async_trait;
+//! # struct SignedReceipt;
 //!
 //! struct MyCheck;
 //!
@@ -208,25 +209,36 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::{
-        str::FromStr,
-        time::{Duration, SystemTime},
-    };
+    use std::time::{Duration, SystemTime};
 
     use alloy::{
-        dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner,
+        dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner, sol,
         sol_types::eip712_domain,
     };
+    use tap_eip712_message::EIP712SignedMessage;
 
     use super::*;
-    use crate::{
-        receipt::{Receipt, SignedReceipt},
-        signed_message::EIP712SignedMessage,
-    };
+
+    sol! {
+        struct MyReceipt {
+            uint64 timestamp_ns;
+            uint128 value;
+        }
+    }
+
+    impl WithValueAndTimestamp for MyReceipt {
+        fn value(&self) -> u128 {
+            self.value
+        }
+
+        fn timestamp_ns(&self) -> u64 {
+            self.timestamp_ns
+        }
+    }
 
     fn create_signed_receipt_with_custom_value(
         value: u128,
-    ) -> ReceiptWithState<Checking, SignedReceipt> {
+    ) -> ReceiptWithState<Checking, EIP712SignedMessage<MyReceipt>> {
         let wallet: PrivateKeySigner = PrivateKeySigner::random();
         let eip712_domain_separator: Eip712Domain = eip712_domain! {
             name: "TAP",
@@ -243,13 +255,9 @@ mod tests {
         let timestamp_ns = timestamp as u64;
 
         let value: u128 = value;
-        let nonce: u64 = 10;
         let receipt = EIP712SignedMessage::new(
             &eip712_domain_separator,
-            Receipt {
-                allocation_id: Address::from_str("0xabababababababababababababababababababab")
-                    .unwrap(),
-                nonce,
+            MyReceipt {
                 timestamp_ns,
                 value,
             },

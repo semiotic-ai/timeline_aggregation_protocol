@@ -1,0 +1,18 @@
+[package]
+name = "tap_graph"
+version = "1.0.0"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+alloy.workspace = true
+serde.workspace = true
+rand.workspace = true
+thiserror.workspace = true
+tap_eip712_message = { path = "../tap_eip712_message" }
+tap_receipt = { path = "../tap_receipt" }
+
+
+[dev-dependencies]
+rstest.workspace = true

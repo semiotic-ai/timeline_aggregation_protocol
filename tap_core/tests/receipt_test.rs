@@ -1,3 +1,6 @@
+// Copyright 2023-, Semiotic AI, Inc.
+// SPDX-License-Identifier: Apache-2.0
+
 use std::{
     collections::HashMap,
     str::FromStr,
@@ -5,19 +8,15 @@ use std::{
 };
 
 use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner};
-// Copyright 2023-, Semiotic AI, Inc.
-// SPDX-License-Identifier: Apache-2.0
-use rand::seq::SliceRandom;
-use rand::thread_rng;
+use rand::{seq::SliceRandom, thread_rng};
 use rstest::*;
 use tap_core::{
     manager::{adapters::ReceiptStore, context::memory::InMemoryContext},
-    receipt::{
-        checks::StatefulTimestampCheck, state::Checking, Receipt, ReceiptWithState, SignedReceipt,
-    },
+    receipt::{checks::StatefulTimestampCheck, state::Checking, ReceiptWithState},
     signed_message::EIP712SignedMessage,
     tap_eip712_domain,
 };
+use tap_graph::{Receipt, SignedReceipt};
 
 #[fixture]
 fn domain_separator() -> Eip712Domain {

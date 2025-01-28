@@ -26,14 +26,11 @@ use rstest::*;
 use tap_aggregator::{jsonrpsee_helpers, server as agg_server};
 use tap_core::{
     manager::context::memory::{checks::get_full_list_of_checks, *},
-    rav::SignedRav,
-    receipt::{
-        checks::{CheckList, StatefulTimestampCheck},
-        Receipt, SignedReceipt,
-    },
+    receipt::checks::{CheckList, StatefulTimestampCheck},
     signed_message::{EIP712SignedMessage, MessageId},
     tap_eip712_domain,
 };
+use tap_graph::{Receipt, SignedRav, SignedReceipt};
 use tokio::task::JoinHandle;
 
 use crate::indexer_mock;

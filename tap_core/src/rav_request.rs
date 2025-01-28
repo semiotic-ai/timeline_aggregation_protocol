@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use alloy::sol_types::SolStruct;
+use tap_receipt::rav::AggregationError;
 
 use crate::{
     receipt::{
@@ -9,7 +10,6 @@ use crate::{
         ReceiptWithState,
     },
     signed_message::EIP712SignedMessage,
-    Error,
 };
 
 /// Request to `tap_aggregator` to aggregate receipts into a Signed RAV.
@@ -22,5 +22,5 @@ pub struct RavRequest<Rcpt, Rav: SolStruct> {
     /// List of failed receipt used to log invalid receipts
     pub invalid_receipts: Vec<ReceiptWithState<Failed, Rcpt>>,
     /// Expected RAV to be created
-    pub expected_rav: Result<Rav, Error>,
+    pub expected_rav: Result<Rav, AggregationError>,
 }

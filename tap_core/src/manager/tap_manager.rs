@@ -4,12 +4,13 @@
 use std::marker::PhantomData;
 
 use alloy::{dyn_abi::Eip712Domain, sol_types::SolStruct};
+use tap_receipt::rav::Aggregate;
 
 use super::adapters::{
     RavRead, RavStore, ReceiptDelete, ReceiptRead, ReceiptStore, SignatureChecker,
 };
 use crate::{
-    rav::{Aggregate, RavRequest},
+    rav_request::RavRequest,
     receipt::{
         checks::{CheckBatch, CheckList, TimestampCheck, UniqueCheck},
         state::{Checked, Failed},

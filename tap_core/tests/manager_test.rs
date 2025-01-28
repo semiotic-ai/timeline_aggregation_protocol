@@ -23,15 +23,15 @@ use tap_core::{
         },
         Manager,
     },
-    rav::ReceiptAggregateVoucher,
     receipt::{
         checks::{Check, CheckError, CheckList, StatefulTimestampCheck},
         state::Checking,
-        Context, Receipt, ReceiptWithState, SignedReceipt,
+        Context, ReceiptWithState,
     },
     signed_message::EIP712SignedMessage,
     tap_eip712_domain,
 };
+use tap_graph::{Receipt, ReceiptAggregateVoucher, SignedReceipt};
 
 #[fixture]
 fn signer() -> PrivateKeySigner {

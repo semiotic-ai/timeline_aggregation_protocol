@@ -42,7 +42,6 @@
 //!         ReceiptError,
 //!         Context
 //!     },
-//!     rav::ReceiptAggregateVoucher,
 //!     manager::{
 //!         Manager,
 //!         adapters::ReceiptStore
@@ -63,7 +62,7 @@
 //! # #[tokio::main]
 //! # async fn main() {
 //! # use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner};
-//! # use tap_core::receipt::{Receipt, SignedReceipt};
+//! # use tap_graph::{Receipt, SignedReceipt, ReceiptAggregateVoucher};
 //! # use tap_core::signed_message::EIP712SignedMessage;
 //! # let domain_separator = Eip712Domain::default();
 //! # let wallet = PrivateKeySigner::random();

@@ -21,9 +21,9 @@ use tap_core::{
         adapters::{RavRead, RavStore, ReceiptRead, ReceiptStore, SignatureChecker},
         Manager,
     },
-    rav::{ReceiptAggregateVoucher, SignedRav},
-    receipt::{checks::CheckList, Context, SignedReceipt},
+    receipt::{checks::CheckList, Context},
 };
+use tap_graph::{ReceiptAggregateVoucher, SignedRav, SignedReceipt};
 /// Rpc trait represents a JSON-RPC server that has a single async method `request`.
 /// This method is designed to handle incoming JSON-RPC requests.
 #[rpc(server)]

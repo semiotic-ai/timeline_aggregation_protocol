@@ -9,11 +9,8 @@ use alloy::{
 };
 use anyhow::{bail, Ok, Result};
 use rayon::prelude::*;
-use tap_core::{
-    rav::ReceiptAggregateVoucher,
-    receipt::Receipt,
-    signed_message::{EIP712SignedMessage, SignatureBytes, SignatureBytesExt},
-};
+use tap_core::signed_message::{EIP712SignedMessage, SignatureBytes, SignatureBytesExt};
+use tap_graph::{Receipt, ReceiptAggregateVoucher};
 
 pub fn check_and_aggregate_receipts(
     domain_separator: &Eip712Domain,
@@ -137,7 +134,8 @@ mod tests {
 
     use alloy::{dyn_abi::Eip712Domain, primitives::Address, signers::local::PrivateKeySigner};
     use rstest::*;
-    use tap_core::{receipt::Receipt, signed_message::EIP712SignedMessage, tap_eip712_domain};
+    use tap_core::{signed_message::EIP712SignedMessage, tap_eip712_domain};
+    use tap_graph::{Receipt, ReceiptAggregateVoucher};
 
     use crate::aggregator;
 
@@ -242,7 +240,7 @@ mod tests {
         // Create rav with max_timestamp below the receipts timestamps
         let rav = EIP712SignedMessage::new(
             &domain_separator,
-            tap_core::rav::ReceiptAggregateVoucher {
+            ReceiptAggregateVoucher {
                 allocationId: allocation_ids[0],
                 timestampNs: receipt_timestamp_range.clone().min().unwrap() - 1,
                 valueAggregate: 42,
@@ -256,7 +254,7 @@ mod tests {
         // Aggregation should fail
         let rav = EIP712SignedMessage::new(
             &domain_separator,
-            tap_core::rav::ReceiptAggregateVoucher {
+            ReceiptAggregateVoucher {
                 allocationId: allocation_ids[0],
                 timestampNs: receipt_timestamp_range.clone().min().unwrap(),
                 valueAggregate: 42,
@@ -270,7 +268,7 @@ mod tests {
         // Aggregation should fail
         let rav = EIP712SignedMessage::new(
             &domain_separator,
-            tap_core::rav::ReceiptAggregateVoucher {
+            ReceiptAggregateVoucher {
                 allocationId: allocation_ids[0],
                 timestampNs: receipt_timestamp_range.clone().max().unwrap() + 1,
                 valueAggregate: 42,

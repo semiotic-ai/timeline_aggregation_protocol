@@ -15,12 +15,12 @@ path = "src/main.rs"
 alloy.workspace = true
 anyhow.workspace = true
 axum = { version = "0.7.5", features = [
-  "http1",
-  "json",
-  "matched-path",
-  "original-uri",
-  "query",
-  "tokio",
+    "http1",
+    "json",
+    "matched-path",
+    "original-uri",
+    "query",
+    "tokio",
 ], default-features = false }
 clap = { version = "4.5.15", features = ["derive", "env"] }
 futures-util = "0.3.28"
@@ -39,6 +39,7 @@ tokio.workspace = true
 tonic = { version = "0.12.3", features = ["transport", "zstd"] }
 tower = { version = "0.5.2", features = ["util", "steer"] }
 tracing-subscriber = "0.3.17"
+tap_graph = { path = "../tap_graph" }
 
 [build-dependencies]
 tonic-build = "0.12.3"

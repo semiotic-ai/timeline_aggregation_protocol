@@ -17,7 +17,7 @@ tokio.workspace = true
 alloy.workspace = true
 jsonrpsee = { workspace = true, features = ["jsonrpsee-http-client"] }
 jsonrpsee-core = "0.24.7"
-
+tap_graph = { path = "../tap_graph" }
 
 [dev-dependencies]
 rstest.workspace = true

@@ -14,11 +14,11 @@ use std::{
 
 use alloy::primitives::Address;
 use async_trait::async_trait;
+use tap_graph::{ReceiptAggregateVoucher, SignedRav, SignedReceipt};
 
 use crate::{
     manager::adapters::*,
-    rav::{ReceiptAggregateVoucher, SignedRav},
-    receipt::{checks::StatefulTimestampCheck, state::Checking, ReceiptWithState, SignedReceipt},
+    receipt::{checks::StatefulTimestampCheck, state::Checking, ReceiptWithState},
     signed_message::MessageId,
 };
 
@@ -259,12 +259,13 @@ pub mod checks {
     };
 
     use alloy::{dyn_abi::Eip712Domain, primitives::Address};
+    use tap_graph::SignedReceipt;
 
     use crate::{
         receipt::{
             checks::{Check, CheckError, CheckResult, ReceiptCheck},
             state::Checking,
-            Context, ReceiptError, ReceiptWithState, SignedReceipt,
+            Context, ReceiptError, ReceiptWithState,
         },
         signed_message::MessageId,
     };

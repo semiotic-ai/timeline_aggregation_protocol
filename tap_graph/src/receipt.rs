@@ -11,8 +11,11 @@
 use alloy::{primitives::Address, sol};
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
+use tap_eip712_message::EIP712SignedMessage;
+use tap_receipt::WithValueAndTimestamp;
 
-use super::WithValueAndTimestamp;
+/// A signed receipt message
+pub type SignedReceipt = EIP712SignedMessage<Receipt>;
 
 sol! {
     /// Holds information needed for promise of payment signed with ECDSA
@@ -31,7 +34,7 @@ sol! {
 
 impl Receipt {
     /// Returns a receipt with provided values
-    pub fn new(allocation_id: Address, value: u128) -> crate::Result<Self> {
+    pub fn new(allocation_id: Address, value: u128) -> Result<Self, crate::Error> {
         let timestamp_ns = crate::get_current_timestamp_u64_ns()?;
         let nonce = thread_rng().gen::<u64>();
         Ok(Self {
