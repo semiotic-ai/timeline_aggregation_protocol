@@ -1,5 +1,9 @@
 # Changelog
 
+* The following workspace dependencies were updated
+  * dependencies
+    * tap_receipt bumped from 0.1.0 to 1.0.0
+
 ## [0.2.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_graph-v0.1.0...tap_graph-v0.2.0) (2025-01-29)
 
 

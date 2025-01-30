@@ -1,6 +1,6 @@
 [package]
 name = "tap_graph"
-version = "0.2.0"
+version = "0.2.1"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -12,7 +12,7 @@ serde.workspace = true
 rand.workspace = true
 thiserror.workspace = true
 tap_eip712_message = { version = "0.1.0", path = "../tap_eip712_message" }
-tap_receipt = { version = "0.1.0", path = "../tap_receipt" }
+tap_receipt = { version = "1.0.0", path = "../tap_receipt" }
 
 
 [dev-dependencies]
