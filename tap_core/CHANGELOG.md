@@ -4,6 +4,25 @@
   * dependencies
     * tap_graph bumped from 0.1.0 to 0.2.0
 
+## [4.0.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_core-v3.0.1...tap_core-v4.0.0) (2025-01-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* relax manager constraints for ravs ([#275](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/275))
+
+### Code Refactoring
+
+* relax manager constraints for ravs ([#275](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/275)) ([9fd4beb](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/9fd4beb4a8c55114a4e33b851b86d80b71d42a00))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * tap_receipt bumped from 0.1.0 to 1.0.0
+    * tap_graph bumped from 0.2.0 to 0.2.1
+
 ## [3.0.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_core-v2.0.0...tap_core-v3.0.0) (2025-01-28)
 
 

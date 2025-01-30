@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/semiotic-ai/timeline-aggregation-protocol/compare/tap_receipt-v0.1.0...tap_receipt-v1.0.0) (2025-01-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* relax manager constraints for ravs ([#275](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/275))
+
+### Code Refactoring
+
+* relax manager constraints for ravs ([#275](https://github.com/semiotic-ai/timeline-aggregation-protocol/issues/275)) ([9fd4beb](https://github.com/semiotic-ai/timeline-aggregation-protocol/commit/9fd4beb4a8c55114a4e33b851b86d80b71d42a00))
+
 ## 0.1.0 (2025-01-28)
 
 
