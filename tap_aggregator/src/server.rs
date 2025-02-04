@@ -12,7 +12,7 @@ use jsonrpsee::{
     server::{ServerBuilder, ServerHandle, TowerService},
 };
 use lazy_static::lazy_static;
-use log::info;
+use log::{error, info};
 use prometheus::{register_counter, register_int_counter, Counter, IntCounter};
 use tap_core::signed_message::Eip712SignedMessage;
 use tap_graph::{Receipt, ReceiptAggregateVoucher, SignedReceipt};
@@ -94,6 +94,7 @@ struct RpcImpl {
     wallet: PrivateKeySigner,
     accepted_addresses: HashSet<Address>,
     domain_separator: Eip712Domain,
+    kafka: Option<rdkafka::producer::ThreadedProducer<rdkafka::producer::DefaultProducerContext>>,
 }
 
 /// Helper method that checks if the given API version is supported.
@@ -254,6 +255,25 @@ impl v2::tap_aggregator_server::TapAggregator for RpcImpl {
                 TOTAL_AGGREGATED_RECEIPTS.inc_by(receipts_count);
                 AGGREGATION_SUCCESS_COUNTER.inc();
 
+                if let Some(kafka) = &self.kafka {
+                    let topic = "gateway_ravs";
+                    let key = format!(
+                        "{:?}:{:?}:{:?}",
+                        self.wallet.address(),
+                        res.message.payer,
+                        res.message.allocationId,
+                    );
+                    let payload = res.message.valueAggregate.to_string();
+                    let result = kafka.send(
+                        rdkafka::producer::BaseRecord::to(topic)
+                            .key(&key)
+                            .payload(&payload),
+                    );
+                    if let Err((err, _)) = result {
+                        error!("error producing to {topic}: {err}");
+                    }
+                }
+
                 let response = v2::RavResponse {
                     rav: Some(res.into()),
                 };
@@ -304,6 +324,7 @@ impl RpcServer for RpcImpl {
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 pub async fn run_server(
     port: u16,
     wallet: PrivateKeySigner,
@@ -312,12 +333,14 @@ pub async fn run_server(
     max_request_body_size: u32,
     max_response_body_size: u32,
     max_concurrent_connections: u32,
+    kafka: Option<rdkafka::producer::ThreadedProducer<rdkafka::producer::DefaultProducerContext>>,
 ) -> Result<(JoinHandle<()>, std::net::SocketAddr)> {
     // Setting up the JSON RPC server
     let rpc_impl = RpcImpl {
         wallet,
         accepted_addresses,
         domain_separator,
+        kafka,
     };
     let (json_rpc_service, _) = create_json_rpc_service(
         rpc_impl.clone(),
@@ -508,6 +531,7 @@ mod tests {
             http_request_size_limit,
             http_response_size_limit,
             http_max_concurrent_connections,
+            None,
         )
         .await
         .unwrap();
@@ -557,6 +581,7 @@ mod tests {
             http_request_size_limit,
             http_response_size_limit,
             http_max_concurrent_connections,
+            None,
         )
         .await
         .unwrap();
@@ -637,6 +662,7 @@ mod tests {
             http_request_size_limit,
             http_response_size_limit,
             http_max_concurrent_connections,
+            None,
         )
         .await
         .unwrap();
@@ -714,6 +740,7 @@ mod tests {
             http_request_size_limit,
             http_response_size_limit,
             http_max_concurrent_connections,
+            None,
         )
         .await
         .unwrap();
@@ -805,6 +832,7 @@ mod tests {
             http_request_size_limit,
             http_response_size_limit,
             http_max_concurrent_connections,
+            None,
         )
         .await
         .unwrap();

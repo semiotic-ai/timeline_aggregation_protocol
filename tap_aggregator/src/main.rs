@@ -71,6 +71,9 @@ struct Args {
     /// Domain salt to be used for the EIP-712 domain separator.
     #[arg(long, env = "TAP_DOMAIN_SALT")]
     domain_salt: Option<String>,
+
+    #[arg(long, env = "TAP_KAFKA_CONFIG")]
+    kafka_config: Option<String>,
 }
 
 #[tokio::main]
@@ -104,6 +107,17 @@ async fn main() -> Result<()> {
         accepted_addresses.extend(public_keys.iter().cloned());
     }
 
+    let kafka = match args.kafka_config {
+        None => None,
+        Some(config) => {
+            let mut client = rdkafka::ClientConfig::new();
+            for (key, value) in config.split(';').filter_map(|s| s.split_once('=')) {
+                client.set(key, value);
+            }
+            Some(client.create()?)
+        }
+    };
+
     // Start the JSON-RPC server.
     // This await is non-blocking
     let (handle, _) = server::run_server(
@@ -114,6 +128,7 @@ async fn main() -> Result<()> {
         args.max_request_body_size,
         args.max_response_body_size,
         args.max_connections,
+        kafka,
     )
     .await?;
     info!("Server started. Listening on port {}.", args.port);

@@ -846,6 +846,7 @@ async fn start_sender_aggregator(
         http_request_size_limit,
         http_response_size_limit,
         http_max_concurrent_connections,
+        None,
     )
     .await?;
 
