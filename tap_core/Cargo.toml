@@ -12,7 +12,6 @@ alloy.workspace = true
 anyhow.workspace = true
 async-trait = "0.1.85"
 rand.workspace = true
-serde.workspace = true
 thiserror.workspace = true
 tokio.workspace = true
 tap_receipt = { version = "0.1.0", path = "../tap_receipt" }
