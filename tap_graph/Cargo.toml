@@ -10,7 +10,6 @@ description = "The Graph TAP receipt structs"
 alloy.workspace = true
 serde.workspace = true
 rand.workspace = true
-thiserror.workspace = true
 tap_eip712_message = { version = "0.1.0", path = "../tap_eip712_message" }
 tap_receipt = { version = "0.1.0", path = "../tap_receipt" }
 

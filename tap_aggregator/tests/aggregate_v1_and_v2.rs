@@ -38,6 +38,7 @@ async fn aggregation_test() {
         max_request_body_size,
         max_response_body_size,
         max_concurrent_connections,
+        None,
     )
     .await
     .unwrap();
